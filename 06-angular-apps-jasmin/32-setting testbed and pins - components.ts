@@ -13,9 +13,3 @@ export class PinsComponent{
         window.open(URL,'_blank');
     }
 }
-
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {PinsComponent} from './pins.Component'
-
-describe
-
