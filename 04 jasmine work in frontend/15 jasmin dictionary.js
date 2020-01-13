@@ -157,5 +157,106 @@ describe('A spy', () => {
        })
    });
 
+   //creating multi spys
+
+   describe("Multi spies", () => {
+       const tape;
+       beforeEach(() => {
+           tape = jasmine.createSpyObj('tape',['play','pause','stop']);
+           tape.play();
+           tape.pause();
+           tape.rewind(0);
+       })
+       it("creates spies for each requested function", () => {
+           expect(tape.play).toBeDefined();
+           expect(tape.pause).toBeDefined();
+           expect(tape.stop).toBeDefined();           
+       })       
+   })
+
+   //verificar la propiedad de un objeto
+
+   describe("jasmine.objectContaining", () => {
+       let foo;
+       beforeEach(() => {
+           foo = {
+               a: 1,
+               b: 2,
+               bar: "baz"
+           };
+       });
+       it("matches objects with the expect key/value pairs", () => {
+           expect(foo).toEqual(jasmine.objectContaining({
+               bar : "baz"
+           }));
+           expect(foo).not.toEqual(jasmine.objectContaining({
+               c: 37
+           }))
+       })
+   })
+
+   // verificar una propiedad dentro de un objeto pasado como parametro a una función
+
+   describe('jasmine.objectContaining', () => {
+       it('is useful for comparing arguments ', () => {
+           const callback = jasmine.createSpy('callback');
+           callback({
+               bar: 'baz',
+           });
+           expect(callback).toHaveBeenCalledWith(
+             jasmine.objectContaining({
+                 bar:'baz'
+             })
+           );
+       });
+   });
+
+   // verificar un valor de un arreglo.
+
+   describe("jasmine.arrayContaining", () => {
+       let foo;
+       beforeEach(function(){
+           foo = [1,2,3,4]
+       });
+       it("matches arrays with some of the values", () => {
+           expect(foo).toEqual(jasmine.arrayContaining([3,1]));
+           expect(foo).not.toEqual(jasmine.arrayContaining([6]));
+       });       
+   })
+
+   //verificar un valor dentro de un arreglo pasado como parametro de una función
+
+   describe('jasmine.arrayContaining', () => {
+       it('is useful when comparing arguments', () => {
+           const callback = jasmine.createSpy('callback');
+           callback([1,2,3,4]);
+           expect(callback).toHaveBeenCalledWith(jasmine.arrayContaining([4,2,3]));
+           expect(callback).not.toHaveBeenCalledWith(jasmine.arrayContaining([5,2]));
+       })
+   })
+
+   //usando regex para comparar cadenas de texto
+
+   describe('jasmine.stringMatching', () => {
+       it('matches as a regexp', () => {
+           expect({foo: 'bar'}).toEqual({foo: jasmine.stringMatching(/^bar$/)});
+           expect({foo: 'foobarbaz'})
+              .toEqual({foo: jasmine.stringMatching('bar')});
+           expect(callback)
+       });
+       describe('when use with a spy', () => {
+           it("comparing arguments", () => {
+               const callback = jasmine.createSpy('callback');
+               callback("foobarbaz");
+               expect(callback)
+                  .toHaveBeenCalledWith(jasmine.stringMatching('bar'));
+               expect(callback)
+                  .not.toHaveBeenCalledWith(jasmine.stringMatching(/^bar$/));
+           })
+       })
+   })
+
+
+
 })
 
