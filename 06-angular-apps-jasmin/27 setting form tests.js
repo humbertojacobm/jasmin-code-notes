@@ -11,7 +11,25 @@ import { NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ReactiveFormsModule, FormArray } from '@angular/forms';
 
 class RepositoryServiceStub {
+   savePins() {
+     return of(true);
+   }
+}
 
+class NavigationServiceStub{
+  goToPins(){
+
+  }
+}
+
+class MatSnackBarStub{
+  open(){
+    return {
+      afterDismissd : () => {
+        return of(true);
+      }
+    }
+  }
 }
 
 fdescribe('FormComponent', () => {
@@ -22,11 +40,15 @@ fdescribe('FormComponent', () => {
     TestBed.configureTestingModule({
       declarations: [FormComponent],
       providers: [
-          {provide: RepositoryService, useClass: RepositoryServiceStub }
-      ]
+          {provide: RepositoryService, useClass: RepositoryServiceStub },
+          {provide: NavigationService, useClass: NavigationServiceStub},
+          {provide: MatSnackBar, useClass: MatSnackBarStub}
+      ],
+      schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
+      imports: [ReactiveFormsModule]
     }).compileComponents();
   }));
-
+  //the first test, that I should do is try to check all dependencies that the component has.
   beforeEach(() => {
     fixture = TestBed.createComponent(FormComponent);
     component = fixture.componentInstance;
@@ -36,6 +58,10 @@ fdescribe('FormComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  //ng test --codeCoverage
+
+
 
 });
 
