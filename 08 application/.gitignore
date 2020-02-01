@@ -34,8 +34,6 @@ npm-debug.log
 yarn-error.log
 testem.log
 /typings
-/.nyc_output
-/spec/istanbul
 
 # System Files
 .DS_Store
